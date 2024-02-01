@@ -65,6 +65,7 @@ public class Main {
                 "--------------------------------------------------------------------\n" +
                 "[1] Listar " + tipo +
                 "\n[2] Adicionar " + tipo +
+                "\n[3] Remover " + tipo +
                 "\n[0] Sair \n" +
                 "--------------------------------------------------------------------\n" +
                 "Por favor, digite o número da opção do menu que você deseja acessar: "
@@ -98,6 +99,10 @@ public class Main {
                     break;
                 case 2:
                     adicionarItemLista(lista);
+                    break;
+                case 3:
+                    removerItemLista(lista, tipo);
+                    imprimirLista(lista, tipo);
                     break;
                 default:
                     System.out.println("\nOpção invalida!");
@@ -135,5 +140,36 @@ public class Main {
         listaCursos.add("JS");
         professores.add("Pâmela");
         professores.add("Rafael");
+    }
+
+    public static int listarPedirIndice(List<String> lista, String tipo) {
+        Scanner entrada = new Scanner(System.in);
+        imprimirLista(lista, tipo);
+        int indice;
+
+        do {
+            System.out.print("Escolha um item da lista ou [-1] para sair: ");
+            indice = entrada.nextInt();
+            if (indice == -1){
+                break;
+            }
+            if (indice < -1 || indice > lista.size()){
+                System.out.println("Item invalido");
+                continue;
+            }
+            break;
+        } while (indice <= 0);
+
+        return indice;
+    }
+
+    public static void removerItem(List<String> lista, int indice) {
+        lista.remove(indice);
+        System.out.println("\nItem excluído.");
+    }
+
+    public static void removerItemLista(List<String> lista, String tipo) {
+        int indice = listarPedirIndice(lista, tipo);
+        removerItem(lista, indice);
     }
 }
