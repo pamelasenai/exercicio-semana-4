@@ -2,7 +2,9 @@
 
 # Exercícios da Semana 4
 #### _(29/01/2024 a 02/02/2024)_
->
+> - Para testar o funcionamento do código do exercício 5 basta rodar o método main. <br>
+> - No arquivo foi adicionado o método popularListas apenas para incluir dados e facilitar os testes, podendo ser removido sem afetar o funcionamento do código. <br>
+> - Os exercícios de 1 a 4 possuem commit com seu nome para facilitar a busca do código do respectivo exercício. 
 ---
 
 ## 📖 [M1S04] Ex 1 - Lista de Cursos e Professores
