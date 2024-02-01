@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 public class Main {
     public static List<String> listaCursos = new ArrayList<>();
+    public static List<String> listaCursosConcluidos = new ArrayList<>();
     public static List<String> professores = new ArrayList<>();
     public static void main(String[] args) {
         Scanner entrada = new Scanner(System.in);
@@ -20,6 +21,7 @@ public class Main {
                 case 0:
                     imprimirLista(professores, "Professores");
                     imprimirLista(listaCursos, "Cursos");
+                    imprimirLista(listaCursosConcluidos, "Cursos Concluídos");
                     System.out.println("\nEncerrando...");
                     break;
                 case 1:
@@ -65,7 +67,15 @@ public class Main {
                 "--------------------------------------------------------------------\n" +
                 "[1] Listar " + tipo +
                 "\n[2] Adicionar " + tipo +
-                "\n[3] Remover " + tipo +
+                "\n[3] Remover " + tipo
+        );
+        if (tipo.equals("Cursos")){
+            System.out.print(
+                    "\n[4] Marcar " + tipo + " como concluído" +
+                    "\n[5] Listar " + tipo + " concluídos"
+            );
+        }
+        System.out.print(
                 "\n[0] Sair \n" +
                 "--------------------------------------------------------------------\n" +
                 "Por favor, digite o número da opção do menu que você deseja acessar: "
@@ -73,13 +83,17 @@ public class Main {
     }
 
     public static void imprimirLista(List<String> lista, String tipo) {
-        System.out.println("\n*************************");
-        System.out.println(tipo);
-        System.out.println("*************************");
-        for (int indice = 0; indice < lista.size(); indice++){
-            System.out.println(indice + "- " + lista.get(indice));
+        if(!lista.isEmpty()) {
+            System.out.println("\n*************************");
+            System.out.println(tipo);
+            System.out.println("*************************");
+            for (int indice = 0; indice < lista.size(); indice++){
+                System.out.println(indice + "- " + lista.get(indice));
+            }
+            System.out.println("*************************");
+        } else {
+            System.out.println("Lista vazia. ");
         }
-        System.out.println("*************************");
     }
 
     public static void gerarMenu(List<String> lista, String tipo) {
@@ -92,18 +106,31 @@ public class Main {
             switch (opcao) {
                 case 0:
                     imprimirLista(lista, tipo);
-                    System.out.println("\nVoltando ao menu anterior!");
+                    System.out.println("\nRetornando ao menu anterior...");
                     break;
                 case 1:
                     imprimirLista(lista, tipo);
                     break;
                 case 2:
                     adicionarItemLista(lista);
+                    imprimirLista(lista, tipo);
                     break;
                 case 3:
                     removerItemLista(lista, tipo);
                     imprimirLista(lista, tipo);
                     break;
+                case 4:
+                    if (tipo.equals("Cursos")) {
+                        marcarComoConcluido();
+                        imprimirLista(listaCursos, "Cursos");
+                        imprimirLista(listaCursosConcluidos, "Cursos Concluídos");
+                        break;
+                    }
+                case 5:
+                    if (tipo.equals("Cursos")) {
+                        imprimirLista(listaCursosConcluidos, "Cursos Concluídos");
+                        break;
+                    }
                 default:
                     System.out.println("\nOpção invalida!");
                     break;
@@ -169,7 +196,23 @@ public class Main {
     }
 
     public static void removerItemLista(List<String> lista, String tipo) {
-        int indice = listarPedirIndice(lista, tipo);
-        removerItem(lista, indice);
+        int indice;
+        do {
+            indice = listarPedirIndice(lista, tipo);
+            if(indice != -1) removerItem(lista, indice);
+        } while (indice != -1);
+    }
+
+    public static void marcarComoConcluido() {
+        int indice;
+        do {
+            indice = listarPedirIndice(listaCursos, "Cursos");
+            if (indice != -1) {
+                String item = listaCursos.get(indice);
+                listaCursosConcluidos.add(item);
+                removerItem(listaCursos, indice);
+                System.out.println("Item concluído.");
+            }
+        } while (indice != -1);
     }
 }
